@@ -458,3 +458,32 @@ CORS_ALLOW_CREDENTIALS = True
 }
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+curl -X POST https://composure-extrovert-twine.ngrok-free.dev/webhooks/esp32/ \
+     -H "Content-Type: application/json" \
+     -d '{
+       "meter_id": "MTR-o2",
+       "voltage": 220.5,
+       "current": 1.25,
+       "power": 275.6,
+       "energy": 45.8,
+       "units": 12.5,
+       "latitude": -1.2921,
+       "longitude": 36.8219
+     }'
+

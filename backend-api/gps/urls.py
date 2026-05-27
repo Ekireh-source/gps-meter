@@ -4,6 +4,9 @@ from gps import views
 app_name = 'gps'
 
 urlpatterns = [
+    # Map data (placed first so it is matched before generic <str:meter_id> rules)
+    path('meters/map-data/', views.MapDataAPIView.as_view(), name='map-data'),
+
     # Meter management
     path('meters/', views.MeterListCreateAPIView.as_view(), name='meter-list-create'),
     path('meters/<str:meter_id>/', views.MeterDetailAPIView.as_view(), name='meter-detail'),
@@ -16,9 +19,6 @@ urlpatterns = [
     
     # Control
     path('meters/<str:meter_id>/control/', views.MeterControlAPIView.as_view(), name='meter-control'),
-    
-    # Map data
-    path('meters/map-data/', views.MapDataAPIView.as_view(), name='map-data'),
     
     # History
     path('meters/<str:meter_id>/location-history/', views.LocationHistoryAPIView.as_view(), name='location-history'),

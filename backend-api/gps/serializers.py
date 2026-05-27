@@ -56,6 +56,12 @@ class ElectricityMeterSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'last_location_update',
+            'available_units',
+            'last_seen',
+            'relay_status',
+            'connection_status',
+            'current_balance',
+            'tamper',
         ]
         read_only_fields = ['id', 'created_at', 'updated_at', 'color', 'within_threshold']
 
@@ -77,6 +83,12 @@ class MeterListSerializer(serializers.ModelSerializer):
             'current_longitude',
             'within_threshold',
             'last_location_update',
+            'available_units',
+            'last_seen',
+            'relay_status',
+            'connection_status',
+            'current_balance',
+            'tamper',
         ]
 
 

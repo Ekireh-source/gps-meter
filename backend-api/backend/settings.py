@@ -25,7 +25,21 @@ SECRET_KEY = 'django-insecure-tcvhaca^#462e6_84k#(l%4ncrp3)du6!%djz+90uskrc!&ri^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    '.ngrok-free.app',
+    '.ngrok-free.dev',
+    '.ngrok.io',
+]
+
+# CSRF Trusted Origins for ngrok/external testing
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.ngrok-free.app',
+    'https://*.ngrok-free.dev',
+    'https://*.ngrok.io',
+]
 
 
 # Application definition
@@ -40,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'gps',
+    'webhooks',
 ]
 
 MIDDLEWARE = [

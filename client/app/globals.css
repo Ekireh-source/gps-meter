@@ -1,12 +1,14 @@
 @import "tailwindcss";
-/* 
- * Leaflet CSS import - Uncomment after running: npm install leaflet react-leaflet @types/leaflet
- * @import "leaflet/dist/leaflet.css";
- */
+/* Leaflet CSS import */
+@import "leaflet/dist/leaflet.css";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --kayak-orange: #ff5a00;
+  --kayak-orange-hover: #e54d00;
+  --kayak-gray: #6b7280;
+  --kayak-light-gray: #f9fafb;
 }
 
 @theme inline {
@@ -26,7 +28,43 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Kayak-inspired button styles */
+.btn-primary {
+  background-color: var(--kayak-orange);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--kayak-orange-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 90, 0, 0.2);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--kayak-gray);
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: var(--kayak-light-gray);
+  border-color: #d1d5db;
 }
 
 /* Leaflet map styles */
@@ -34,6 +72,15 @@ body {
   height: 100%;
   width: 100%;
   z-index: 1;
+  font-family: inherit;
+}
+
+.leaflet-container a {
+  color: #0078a8;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
 }
 
 .custom-marker {

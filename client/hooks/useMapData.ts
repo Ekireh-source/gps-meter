@@ -9,16 +9,20 @@ export function useMapData(refreshInterval?: number) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchMapData = useCallback(async () => {
+  const fetchMapData = useCallback(async (isSilent = false) => {
     try {
-      setLoading(true);
+      if (!isSilent) {
+        setLoading(true);
+      }
       const data = await getMapData();
       setMeters(data);
       setError(null);
     } catch (err) {
       setError(err as Error);
     } finally {
-      setLoading(false);
+      if (!isSilent) {
+        setLoading(false);
+      }
     }
   }, []);
 
@@ -26,11 +30,16 @@ export function useMapData(refreshInterval?: number) {
     fetchMapData();
 
     if (refreshInterval) {
-      const intervalId = setInterval(fetchMapData, refreshInterval);
+      const intervalId = setInterval(() => fetchMapData(true), refreshInterval);
       return () => clearInterval(intervalId);
     }
   }, [fetchMapData, refreshInterval]);
 
-  return { meters, loading, error, refresh: fetchMapData };
+  return { 
+    meters, 
+    loading, 
+    error, 
+    refresh: () => fetchMapData(false) 
+  };
 }
 

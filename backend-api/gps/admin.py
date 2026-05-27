@@ -16,14 +16,17 @@ class ElectricityMeterAdmin(admin.ModelAdmin):
             'fields': (
                 'default_latitude', 'default_longitude',
                 'current_latitude', 'current_longitude',
-                'threshold_distance', 'last_location_update'
+                'threshold_distance'
             )
         }),
         ('Status', {
-            'fields': ('status', 'color', 'within_threshold')
+            'fields': ('status', 'color', 'within_threshold', 'connection_status', 'relay_status', 'tamper')
+        }),
+        ('Meter Data', {
+            'fields': ('available_units', 'current_balance')
         }),
         ('Timestamps', {
-            'fields': ('created_at', 'updated_at')
+            'fields': ('created_at', 'updated_at', 'last_location_update', 'last_seen')
         }),
     )
 

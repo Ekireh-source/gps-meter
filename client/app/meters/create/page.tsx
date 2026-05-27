@@ -89,7 +89,7 @@ export default function CreateMeterPage() {
       setError(
         err instanceof Error
           ? err.message
-          : 'Failed to create meter. Please try again.'
+          : 'Failed to register meter. Please verify data and try again.'
       );
     } finally {
       setLoading(false);
@@ -97,33 +97,48 @@ export default function CreateMeterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="mb-6">
-          <Link
-            href="/meters"
-            className="text-blue-600 hover:text-blue-800 mb-4 inline-block"
-          >
-            ← Back to Meters
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-950 to-black text-slate-100 pb-16 selection:bg-orange-500 selection:text-white">
+      
+      {/* Header navbar */}
+      <header className="sticky top-0 z-40 backdrop-blur-md bg-slate-900/85 border-b border-slate-800/80 px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Link href="/" className="w-8 h-8 bg-[#ff5a00] rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/20 hover:opacity-90 transition-opacity">
+            <span className="text-white font-black text-lg">G</span>
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Create New Meter
-          </h1>
-          <p className="text-gray-600">
-            Register a new electricity meter with GPS tracking
-          </p>
+          <span className="text-xl font-bold tracking-tight text-white">
+            GPS <span className="text-orange-500">Monitor</span>
+          </span>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <Link
+          href="/meters"
+          className="text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+        >
+          ← Cancel and Return
+        </Link>
+      </header>
+
+      <div className="max-w-2xl mx-auto px-6 mt-12 relative overflow-hidden">
+        
+        {/* Glow BGs */}
+        <div className="absolute top-10 right-0 w-80 h-80 bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="mb-8 relative z-10">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">Register New Meter</h1>
+          <p className="text-sm text-slate-400">Configure a smart device instance onto the electricity power grid</p>
+        </div>
+
+        <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 shadow-2xl relative z-10 backdrop-blur-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && <ErrorMessage message={error} />}
 
             <div>
               <label
                 htmlFor="meter_id"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-xs uppercase font-bold text-slate-400 tracking-wider mb-2"
               >
-                Meter ID <span className="text-red-500">*</span>
+                Meter ID / Serial Number <span className="text-orange-500 font-black">*</span>
               </label>
               <input
                 type="text"
@@ -132,20 +147,20 @@ export default function CreateMeterPage() {
                 value={formData.meter_id}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="e.g., MTR-001"
+                className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-850 rounded-xl focus:outline-none focus:border-orange-500 text-slate-100 placeholder-slate-600 transition-colors text-sm font-semibold"
+                placeholder="e.g., MTR-o2"
               />
-              <p className="mt-1 text-xs text-gray-500">
-                Unique identifier for the meter
+              <p className="mt-1.5 text-[10px] text-slate-500 font-medium">
+                Must match the device configuration ID uploaded from the ESP32.
               </p>
             </div>
 
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-xs uppercase font-bold text-slate-400 tracking-wider mb-2"
               >
-                Meter Name <span className="text-red-500">*</span>
+                Display Label Name <span className="text-orange-500 font-black">*</span>
               </label>
               <input
                 type="text"
@@ -154,18 +169,18 @@ export default function CreateMeterPage() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="e.g., Main Building Meter"
+                className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-850 rounded-xl focus:outline-none focus:border-orange-500 text-slate-100 placeholder-slate-600 transition-colors text-sm font-semibold"
+                placeholder="e.g., Residential Complex A"
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label
                   htmlFor="default_latitude"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-xs uppercase font-bold text-slate-400 tracking-wider mb-2"
                 >
-                  Default Latitude <span className="text-red-500">*</span>
+                  Reference Latitude <span className="text-orange-500 font-black">*</span>
                 </label>
                 <input
                   type="number"
@@ -177,18 +192,18 @@ export default function CreateMeterPage() {
                   step="any"
                   min="-90"
                   max="90"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g., 40.7128"
+                  className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-850 rounded-xl focus:outline-none focus:border-orange-500 text-slate-100 placeholder-slate-600 transition-colors text-sm font-mono font-semibold"
+                  placeholder="e.g., 0.337033"
                 />
-                <p className="mt-1 text-xs text-gray-500">Range: -90 to 90</p>
+                <p className="mt-1 text-[10px] text-slate-500 font-medium">Range: -90.0 to 90.0</p>
               </div>
 
               <div>
                 <label
                   htmlFor="default_longitude"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-xs uppercase font-bold text-slate-400 tracking-wider mb-2"
                 >
-                  Default Longitude <span className="text-red-500">*</span>
+                  Reference Longitude <span className="text-orange-500 font-black">*</span>
                 </label>
                 <input
                   type="number"
@@ -200,20 +215,20 @@ export default function CreateMeterPage() {
                   step="any"
                   min="-180"
                   max="180"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g., -74.0060"
+                  className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-850 rounded-xl focus:outline-none focus:border-orange-500 text-slate-100 placeholder-slate-600 transition-colors text-sm font-mono font-semibold"
+                  placeholder="e.g., 32.577518"
                 />
-                <p className="mt-1 text-xs text-gray-500">Range: -180 to 180</p>
+                <p className="mt-1 text-[10px] text-slate-500 font-medium">Range: -180.0 to 180.0</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label
                   htmlFor="threshold_distance"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-xs uppercase font-bold text-slate-400 tracking-wider mb-2"
                 >
-                  Threshold Distance (meters) <span className="text-red-500">*</span>
+                  Security Fence Radius (meters) <span className="text-orange-500 font-black">*</span>
                 </label>
                 <input
                   type="number"
@@ -224,48 +239,48 @@ export default function CreateMeterPage() {
                   required
                   step="0.01"
                   min="0"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-850 rounded-xl focus:outline-none focus:border-orange-500 text-slate-100 placeholder-slate-600 transition-colors text-sm font-semibold"
                   placeholder="50"
                 />
-                <p className="mt-1 text-xs text-gray-500">
-                  Maximum allowed distance from default location
+                <p className="mt-1.5 text-[10px] text-slate-500 font-medium">
+                  Trigger automatic shut-off if device moves beyond this boundary.
                 </p>
               </div>
 
               <div>
                 <label
                   htmlFor="status"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-xs uppercase font-bold text-slate-400 tracking-wider mb-2"
                 >
-                  Initial Status <span className="text-red-500">*</span>
+                  Initial Relay State <span className="text-orange-500 font-black">*</span>
                 </label>
                 <select
                   id="status"
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-slate-950/85 border border-slate-850 rounded-xl focus:outline-none focus:border-orange-500 text-slate-100 transition-colors text-sm font-semibold"
                 >
                   <option value="ON">ON</option>
                   <option value="OFF">OFF</option>
                 </select>
-                <p className="mt-1 text-xs text-gray-500">
-                  Initial meter status
+                <p className="mt-1.5 text-[10px] text-slate-500 font-medium">
+                  Default switch state of the meter output relay.
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-4 pt-4">
+            <div className="flex gap-4 pt-6 border-t border-slate-800/80">
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-medium"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 disabled:from-slate-800 disabled:to-slate-800 text-white rounded-xl disabled:text-slate-500 disabled:cursor-not-allowed transition-all font-semibold text-sm shadow-lg shadow-orange-950/30"
               >
-                {loading ? 'Creating...' : 'Create Meter'}
+                {loading ? 'Registering Device...' : 'Register Device'}
               </button>
               <Link
                 href="/meters"
-                className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium text-center"
+                className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition-all font-semibold text-sm border border-slate-700/50"
               >
                 Cancel
               </Link>
@@ -273,19 +288,22 @@ export default function CreateMeterPage() {
           </form>
         </div>
 
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="text-sm font-semibold text-blue-900 mb-2">
-            📍 Location Tips
+        {/* Informational Widget */}
+        <div className="mt-8 bg-blue-950/30 border border-blue-500/20 rounded-2xl p-5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
+          <h3 className="text-sm font-bold text-blue-400 mb-2.5 flex items-center gap-1.5">
+            <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            GPS Boundary Protection Info
           </h3>
-          <ul className="text-sm text-blue-800 space-y-1">
-            <li>• Use GPS coordinates from Google Maps or similar services</li>
-            <li>• Default location is where the meter should remain</li>
-            <li>• If meter moves beyond threshold distance, it will automatically turn off</li>
-            <li>• Threshold distance is measured in meters (default: 50m)</li>
+          <ul className="text-xs text-blue-300 space-y-1.5 leading-relaxed">
+            <li>• Obtain precise base coordinates directly from high-resolution map indicators.</li>
+            <li>• Reference Coordinates must represent the permanent static physical installation point.</li>
+            <li>• Automated security checks will cut off device power if the system detects an unauthorized radius breach.</li>
           </ul>
         </div>
       </div>
     </div>
   );
 }
-

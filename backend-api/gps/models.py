@@ -56,6 +56,71 @@ class ElectricityMeter(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     last_location_update = models.DateTimeField(null=True, blank=True)
     
+    # Additional meter data fields
+    voltage = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        help_text="Current RMS voltage"
+    )
+    current = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        help_text="Current RMS current"
+    )
+    power = models.DecimalField(
+        max_digits=10,
+        decimal_places=4,
+        null=True,
+        blank=True,
+        help_text="Active power in kW"
+    )
+    energy = models.DecimalField(
+        max_digits=14,
+        decimal_places=4,
+        null=True,
+        blank=True,
+        help_text="Total energy consumed in kWh"
+    )
+    available_units = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        default=Decimal('0.00'),
+        help_text="Available units for the meter"
+    )
+    last_seen = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Last time the meter was seen/connected"
+    )
+    relay_status = models.CharField(
+        max_length=10,
+        default='OFF',
+        help_text="Relay status (ON/OFF)"
+    )
+    connection_status = models.CharField(
+        max_length=20,
+        default='OFFLINE',
+        help_text="Connection status (ONLINE/OFFLINE)"
+    )
+    current_balance = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        default=Decimal('0.00'),
+        help_text="Current balance of the meter"
+    )
+    tamper = models.BooleanField(
+        default=False,
+        help_text="Tamper detection status"
+    )
+    
     class Meta:
         ordering = ['-created_at']
         verbose_name = 'Electricity Meter'

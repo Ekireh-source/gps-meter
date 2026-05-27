@@ -16,6 +16,16 @@ export interface Meter {
   created_at: string;
   updated_at: string;
   last_location_update: string | null;
+  available_units: number | null;
+  last_seen: string | null;
+  relay_status: string;
+  connection_status: string;
+  current_balance: number | null;
+  tamper: boolean;
+  voltage: number | null;
+  current: number | null;
+  power: number | null;
+  energy: number | null;
 }
 
 export interface MeterStatus {
